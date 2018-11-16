@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>RabbitMQ Demo</title>
+
+    <!--Bulma-->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css"/>
+
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    
+    <!-- Load React. -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.js" crossorigin></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" crossorigin></script>
+
+</head>          
+<body>
+
+<section class="section">
+    <div class="container">
+        <form name="frmMessagesPerSecond" action="/publisher" method="post">
+            <label for="messagesPerSecond">Messages Per Second: </label>
+            <input id="messagesPerSecond" name="messagesPerSecond" type="text" value="1"/>
+            <input type="submit" value="Submit"/>
+        </form>
+
+        <br>
+        <div id="react-component-container"></div>
+    </div>
+</section>
+
+<!-- Load our React component. -->
+<script type="text/babel" th:src="@{ProgressTracker.js}"></script>
+
+<script type="text/javascript">
+
+</script>
+</body>
+</html>
