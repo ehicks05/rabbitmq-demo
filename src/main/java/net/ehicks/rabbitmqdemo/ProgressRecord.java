@@ -1,19 +1,19 @@
 package net.ehicks.rabbitmqdemo;
 
-import java.util.List;
+import java.util.Map;
 
 public class ProgressRecord
 {
     private int messagesPerSecond;
     private int activeConsumers;
     private int queuedMessages;
-    private List<ConsumerRecord> consumerProgress;
+    private Map<Integer, ConsumerRecord> consumerProgress;
 
     public ProgressRecord()
     {
     }
 
-    public ProgressRecord(int messagesPerSecond, int activeConsumers, int queuedMessages, List<ConsumerRecord> consumerProgress)
+    public ProgressRecord(int messagesPerSecond, int activeConsumers, int queuedMessages, Map<Integer, ConsumerRecord> consumerProgress)
     {
         this.messagesPerSecond = messagesPerSecond;
         this.activeConsumers = activeConsumers;
@@ -51,12 +51,12 @@ public class ProgressRecord
         this.queuedMessages = queuedMessages;
     }
 
-    public List<ConsumerRecord> getConsumerProgress()
+    public Map<Integer, ConsumerRecord> getConsumerProgress()
     {
         return consumerProgress;
     }
 
-    public void setConsumerProgress(List<ConsumerRecord> consumerProgress)
+    public void setConsumerProgress(Map<Integer, ConsumerRecord> consumerProgress)
     {
         this.consumerProgress = consumerProgress;
     }

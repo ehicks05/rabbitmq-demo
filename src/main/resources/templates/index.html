@@ -24,7 +24,8 @@
     <div class="container">
         <form name="frmMessagesPerSecond" action="/publisher" method="post">
             <label for="messagesPerSecond">Messages Per Second: </label>
-            <input id="messagesPerSecond" name="messagesPerSecond" type="text" value="1"/>
+            <input id="messagesPerSecond" name="messagesPerSecond" type="text" th:value="${messagesPerSecond}"/>
+
             <input type="submit" value="Submit"/>
         </form>
 

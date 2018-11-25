@@ -10,7 +10,7 @@ class ProgressTracker extends React.Component {
         this.state.messagesPerSecond = 0;
         this.state.activeConsumers = 0;
         this.state.queuedMessages = 0;
-        this.state.consumerProgress = [];
+        this.state.consumerProgress = {};
     }
 
     componentDidMount()
@@ -37,18 +37,27 @@ class ProgressTracker extends React.Component {
 
     handleData(response)
     {
-        this.setState({
-            messagesPerSecond: response.messagesPerSecond,
-            activeConsumers: response.activeConsumers,
-            queuedMessages: response.queuedMessages,
-            consumerProgress: response.consumerProgress
-        });
+        let theSame = this.state.messagesPerSecond === response.messagesPerSecond
+                     && this.state.activeConsumers === response.activeConsumers
+                     && this.state.queuedMessages  === response.queuedMessages
+                    && JSON.stringify(this.state.consumerProgress) === JSON.stringify(response.consumerProgress);
+
+        if (theSame)
+            this.setState({
+                messagesPerSecond: response.messagesPerSecond,
+                activeConsumers: response.activeConsumers,
+                queuedMessages: response.queuedMessages,
+                consumerProgress: response.consumerProgress
+            });
     }
 
     render()
     {
-        let progressRows = this.state.consumerProgress.map((value, index) => {
-            return (<tr key={value.consumerKey}>
+        let progressRows = Object.keys(this.state.consumerProgress).map((key, index) => {
+            let value = this.state.consumerProgress[key];
+            // console.log(value);
+            return (<tr key={index}>
+                <td>{index + 1}</td>
                 <td>{value.consumerKey}</td>
                 <td>{value.workMessage}</td>
                 <td>
@@ -56,6 +65,20 @@ class ProgressTracker extends React.Component {
                 </td>
             </tr>);
         });
+
+        for (let i = progressRows.length; i < this.state.activeConsumers; i++)
+        {
+            let n = i + 1;
+            let row = (<tr key={n}>
+                <td>{n}</td>
+                <td className={'has-text-grey'}>idle</td>
+                <td className={'has-text-grey'}>idle</td>
+                <td>
+                    <progress className="progress is-primary is-small" value="0" max="100">0%</progress>
+                </td>
+            </tr>);
+            progressRows.push(row);
+        }
 
         return (
             <div>
@@ -66,6 +89,7 @@ class ProgressTracker extends React.Component {
                 <table className={'table is-narrow is-striped'}>
                     <thead>
                         <tr>
+                            <th></th>
                             <th>thread</th>
                             <th>work message</th>
                             <th style={pStyle}>progress</th>
