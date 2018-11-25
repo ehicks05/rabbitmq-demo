@@ -42,7 +42,7 @@ class ProgressTracker extends React.Component {
                      && this.state.queuedMessages  === response.queuedMessages
                     && JSON.stringify(this.state.consumerProgress) === JSON.stringify(response.consumerProgress);
 
-        if (theSame)
+        if (!theSame)
             this.setState({
                 messagesPerSecond: response.messagesPerSecond,
                 activeConsumers: response.activeConsumers,
